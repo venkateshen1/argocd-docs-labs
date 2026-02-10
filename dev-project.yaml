@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev-project
+  namespace: argocd
+spec:
+  description: Development environment project
+  
+  # Source repositories allowed
+  sourceRepos:
+  - '*'  
+  
+  # Destination clusters and namespaces
+  destinations:
+  - namespace: 'dev-*'
+    server: https://kubernetes.default.svc
+  - namespace: development
+    server: https://kubernetes.default.svc
+  
+  # Cluster resource whitelist (what can be deployed)
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  
+  # Namespace resource whitelist
+  namespaceResourceWhitelist:
+  - group: 'apps'
+    kind: Deployment
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: ConfigMap
+  - group: ''
+    kind: Secret
